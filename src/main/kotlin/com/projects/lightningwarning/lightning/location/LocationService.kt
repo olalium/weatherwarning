@@ -8,7 +8,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Component
-class LocationService(val locationConfig: LocationConfig) {
+class LocationService(private val locationConfig: LocationConfig) {
 
     fun distanceFromUserInKm(longitude: Double, latitude: Double, precision: Int = 1): BigDecimal {
         val theta = locationConfig.longitude - longitude

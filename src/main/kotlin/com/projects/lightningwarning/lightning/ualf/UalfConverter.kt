@@ -1,4 +1,4 @@
-package com.projects.lightningwarning.ualf
+package com.projects.lightningwarning.lightning.ualf
 
 import org.springframework.stereotype.Component
 

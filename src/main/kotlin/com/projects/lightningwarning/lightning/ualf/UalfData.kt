@@ -1,4 +1,4 @@
-package com.projects.lightningwarning.ualf
+package com.projects.lightningwarning.lightning.ualf
 
 data class UalfData(
     val version: Int,

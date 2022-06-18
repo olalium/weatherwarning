@@ -1,18 +1,18 @@
 package com.projects.lightningwarning.lightning
 
 import com.projects.lightningwarning.lightning.frostapi.FrostApiService
-import com.projects.lightningwarning.ualf.UalfConverter
-import com.projects.lightningwarning.ualf.UalfData
+import com.projects.lightningwarning.lightning.ualf.UalfConverter
+import com.projects.lightningwarning.lightning.ualf.UalfData
 import org.springframework.stereotype.Component
 
 @Component
 class LightningService(
-    val frostApiService: FrostApiService,
-    val ualfConverter: UalfConverter
+    private val frostApiService: FrostApiService,
+    private val ualfConverter: UalfConverter
 ) {
     private val registeredLightnings: MutableList<String> = mutableListOf()
 
-    fun getLightningObservations(referenceTime: String = "latest", maxAge: String = "PT30M"): List<UalfData> {
+    fun getNewLightningObservations(referenceTime: String = "latest", maxAge: String = "PT30M"): List<UalfData> {
         val stringifiedUalfRows = frostApiService.getLightningData(referenceTime, maxAge)
         val lightningObservations = ualfConverter.fromString(stringifiedUalfRows)
         return getNewLightningsObservations(lightningObservations)

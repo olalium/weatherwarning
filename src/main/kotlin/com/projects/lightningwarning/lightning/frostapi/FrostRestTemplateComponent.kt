@@ -1,13 +1,12 @@
-package com.projects.lightningwarning.lightning
+package com.projects.lightningwarning.lightning.frostapi
 
-import com.projects.lightningwarning.lightning.frostapi.FrostApiConfig
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
 @Component
-class RestTemplateConfig(val frostApiConfig: FrostApiConfig) {
+class FrostRestTemplateComponent(private val frostApiConfig: FrostApiConfig) {
 
     @Bean("frostRestTemplate")
     fun frostRestTemplate(): RestTemplate {

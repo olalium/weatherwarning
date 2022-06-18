@@ -1,12 +1,11 @@
 package com.projects.lightningwarning.lightning.frostapi
 
-import com.projects.lightningwarning.lightning.RestTemplateConfig
 import org.springframework.stereotype.Component
 
 @Component
-class FrostApiService(val restTemplateConfig: RestTemplateConfig) {
+class FrostApiService(private val frostRestTemplateComponent: FrostRestTemplateComponent) {
 
-    fun getLightningData (referenceTime: String, maxAge: String): String = restTemplateConfig
+    fun getLightningData (referenceTime: String, maxAge: String): String = frostRestTemplateComponent
         .frostRestTemplate()
         .getForObject(
             "/lightning/v0.ualf?referencetime=${referenceTime}&maxage=${maxAge}",
