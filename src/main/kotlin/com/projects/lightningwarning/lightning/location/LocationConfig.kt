@@ -1,4 +1,4 @@
-package com.projects.lightningwarning.lightning
+package com.projects.lightningwarning.lightning.location
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding

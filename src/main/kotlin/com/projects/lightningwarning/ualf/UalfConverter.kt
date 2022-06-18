@@ -46,5 +46,5 @@ class UalfConverter {
                         lightningDataColumns[6] +
                         lightningDataColumns[7]
                 )
-            }
+            }.reversed()
 }
