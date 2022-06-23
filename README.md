@@ -1,4 +1,4 @@
-# weatherwarning (Lightning}
+# weatherwarning (Lightning ⚡⚡⚡)
 App to get information about lightning using the frost met api and Amazon SNS. Only works in areas FrostAPI has coverage, basically Scandinavia.
 When properly configured the app will send SMS messages with information about lightning near your location.
 ## Example SMS message
