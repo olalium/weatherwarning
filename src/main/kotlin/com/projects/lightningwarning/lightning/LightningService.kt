@@ -1,5 +1,6 @@
 package com.projects.lightningwarning.lightning
 
+import aws.smithy.kotlin.runtime.util.length
 import com.projects.lightningwarning.lightning.frostapi.FrostApiService
 import com.projects.lightningwarning.lightning.ualf.UalfConverter
 import com.projects.lightningwarning.lightning.ualf.UalfData
@@ -15,8 +16,12 @@ class LightningService(
     fun getNewLightningObservations(referenceTime: String = "latest", maxAge: String = "PT30M"): List<UalfData> {
         val stringifiedUalfRows = frostApiService.getLightningData(referenceTime, maxAge)
         val lightningObservations = ualfConverter.fromString(stringifiedUalfRows)
-        return getNewLightningsObservations(lightningObservations)
+        val newLightningObservations = getNewLightningsObservations(lightningObservations)
+        if (newLightningObservations.length > 0)
+            println("${newLightningObservations.length} lightning observations found")
+        return newLightningObservations
     }
+
     private fun getNewLightningsObservations (lightningObservations: List<UalfData>) = lightningObservations.filter {
         if (registeredLightnings.contains(it.uniqueIdentifier)) {
             false

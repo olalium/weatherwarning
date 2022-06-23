@@ -40,6 +40,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>aws.sdk.kotlin</groupId>
+			<artifactId>sns-jvm</artifactId>
+			<version>0.16.1-beta</version>
+		</dependency>
 	</dependencies>
 
 	<build>

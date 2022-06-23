@@ -1,11 +1,13 @@
-package com.projects.lightningwarning.lightning.location
+package com.projects.lightningwarning.user
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
-@ConfigurationProperties("user.location")
+@ConfigurationProperties("user")
 @ConstructorBinding
-data class LocationConfig (
+data class UserConfig (
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val maxDistance: Double,
+    val phoneNumber: String
 )
