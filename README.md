@@ -9,11 +9,17 @@ current: 3kamp
 type: air to ground
 gmaps: https://www.google.com/maps/search/?api=1&query=67.8017,24.5751
 ```
-# Prerequisites
+
+# Setup
+## Prerequisites
 Java 17
 
+## install, compile and build jar
+1. to install dependencies, compile and build jar run ```./mvnw install```
+2. then run the outputted jar with ```java -jar ```
+
 ## Environmental variables
-You need to pass the following environmental variables
+You need to pass the following environmental variables. 
 | Environmental variable | description                                                              |
 |------------------------|--------------------------------------------------------------------------|
 | met-client-id          | client id for the frost.met.no api https://frost.met.no/howto.html       |
@@ -25,3 +31,4 @@ You need to pass the following environmental variables
 | aws-region             | aws region of your sns service                                           |
 | aws-access-key         | aws access key for your aws IAM user                                     |
 | aws-secret-key         | aws secret key for your aws IAM user                                     |
+
