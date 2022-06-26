@@ -7,6 +7,7 @@ import com.projects.lightningwarning.lightning.location.LocationService
 import com.projects.lightningwarning.lightning.ualf.UalfData
 import com.projects.lightningwarning.messagecontent.MessageContentService
 import com.projects.lightningwarning.user.UserConfig
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,6 +15,7 @@ class AwsSnsService(
     private val awsConfig: AwsConfig,
     private val userConfig: UserConfig,
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
 
     suspend fun pubTextSMSToUser(messageVal: String?) {
         val request = PublishRequest {
@@ -23,7 +25,7 @@ class AwsSnsService(
 
         getAmazonSNS().use { snsClient ->
             val result = snsClient.publish(request)
-            println("${result.messageId} message sent with following message:\n${messageVal}")
+            logger.info("${result.messageId} message sent with following message:\n${messageVal}")
         }
     }
 

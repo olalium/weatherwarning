@@ -19,7 +19,7 @@ class LightningService(
     suspend fun getFilteredLightningObservationsAndSendToUser(referenceTime: String = "latest", maxAge: String = "PT5M") {
         val lightningObservations = frostApiService.getUalfLightningData(referenceTime, maxAge)
         val filteredObservations = filterLightningObservations(lightningObservations)
-        sendLightningObservationsToUserIfNotEmpty(filteredObservations)
+        sendLightningObservationsToUser(filteredObservations)
     }
 
     private fun filterLightningObservations (observations: List<UalfData>): List<UalfData> {
@@ -40,7 +40,7 @@ class LightningService(
         locationService.locationIsWithinUserMaxDistance(it.longitude, it.latitude)
     }
 
-    private suspend fun sendLightningObservationsToUserIfNotEmpty(observations: List<UalfData>) {
+    private suspend fun sendLightningObservationsToUser(observations: List<UalfData>) {
         if (observations.isNotEmpty()) {
             val smsContent = messageContentService.getMessageContentForLightningObservations(observations)
             awsSnsService.pubTextSMSToUser(smsContent)
