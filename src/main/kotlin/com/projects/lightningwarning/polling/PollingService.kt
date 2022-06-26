@@ -11,7 +11,7 @@ class PollingService(
     private val awsSnsService: AwsSnsService
 ) {
 
-    @Scheduled(fixedDelay = 10000) // Every 10 seconds
+    @Scheduled(fixedDelay = 5000) // Every 5 seconds
     fun getNewLightningObservationsWithFixedDelayAndNotifyUser() {
         val newLightningObservations = lightningService.getNewLightningObservations()
 

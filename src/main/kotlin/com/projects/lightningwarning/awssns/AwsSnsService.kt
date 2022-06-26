@@ -1,5 +1,7 @@
 package com.projects.lightningwarning.awssns
 
+import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
+import aws.sdk.kotlin.services.sns.SnsClient
 import aws.sdk.kotlin.services.sns.model.PublishRequest
 import com.projects.lightningwarning.lightning.location.LocationService
 import com.projects.lightningwarning.lightning.ualf.UalfData
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class AwsSnsService(
     private val locationService: LocationService,
-    private val awsSnsConfig: AwsSnsConfig,
+    private val awsConfig: AwsConfig,
     private val userConfig: UserConfig,
     private val messageContentService: MessageContentService
 ) {
@@ -31,9 +33,17 @@ class AwsSnsService(
             phoneNumber = userConfig.phoneNumber
         }
 
-        awsSnsConfig.amazonSNS().use { snsClient ->
+        getAmazonSNS().use { snsClient ->
             val result = snsClient.publish(request)
             println("${result.messageId} message sent with following message:\n${messageVal}")
+        }
+    }
+
+    private fun getAmazonSNS(): SnsClient = SnsClient {
+        region = awsConfig.region
+        credentialsProvider = StaticCredentialsProvider {
+            accessKeyId = awsConfig.accessKey
+            secretAccessKey = awsConfig.secretKey
         }
     }
 }
