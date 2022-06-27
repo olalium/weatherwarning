@@ -2,20 +2,20 @@ package com.projects.lightningwarning.polling.lightningqueue
 
 import com.projects.lightningwarning.sse.SSELightningObservation
 import org.springframework.stereotype.Component
-import java.util.LinkedList
-import java.util.Queue
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
 
 @Component
 class LightningQueue {
 
-    private val lightningStrikeQueue: Queue<SSELightningObservation> = LinkedList()
+    private val lightningStrikeQueue: BlockingQueue<SSELightningObservation> = LinkedBlockingQueue()
 
     fun addLightningObservationToQueue(lightningObservation: SSELightningObservation) =
-            lightningStrikeQueue.add(lightningObservation)
+            lightningStrikeQueue.put(lightningObservation)
 
     fun notEmpty(): Boolean = !lightningStrikeQueue.isEmpty()
 
-    fun getAndRemoveItemFromQueue(): SSELightningObservation = lightningStrikeQueue.poll()
+    fun getAndRemoveItemFromQueue(): SSELightningObservation = lightningStrikeQueue.take()
 
     fun getSize(): Int = lightningStrikeQueue.size
 }
