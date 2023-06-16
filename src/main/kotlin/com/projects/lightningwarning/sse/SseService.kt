@@ -27,7 +27,7 @@ class SseService(
 
     @PostConstruct
     private fun connectToSse() {
-        val type = object : ParameterizedTypeReference<ServerSentEvent<String>>() {}
+        val type = object : ParameterizedTypeReference<ServerSentEvent<List<List<Double>>>>() {}
         logger.info("subscribing to event stream...")
         val webClient = WebClient.create()
         val eventStream = webClient.get()
@@ -38,17 +38,16 @@ class SseService(
         eventStream.subscribe ({ onMessageReceived(it) }, {onError(it)})
     }
 
-    private fun onMessageReceived(message: ServerSentEvent<String>) {
+    private fun onMessageReceived(message: ServerSentEvent<List<List<Double>>>) {
         val data = message.data()
-        if (message.event() == "lx" && !data.isNullOrBlank()) {
+        if (message.event() == "lx" && !data.isNullOrEmpty()) {
             addServerSentEventDataToQueue(data)
         }
     }
 
-    private fun addServerSentEventDataToQueue(stringifiedObservations: String) {
-        val stringifiedObservation = stringifiedObservations.split("\n")
-        stringifiedObservation.forEach {
-            val lightningObservation = mapper.fromJson(it, Array<SSELightningObservation>::class.java).first()
+    private fun addServerSentEventDataToQueue(observations: List<List<Double>>) {
+        observations.forEach {
+            val lightningObservation = SSELightningObservation(it[0].toString(), listOf( it[1], it[2]), it[3].toInt())
             logger.info("lightning observed at ${lightningObservation.Epoch}, adding to queue")
             lightningQueue.addLightningObservationToQueue(lightningObservation)
         }

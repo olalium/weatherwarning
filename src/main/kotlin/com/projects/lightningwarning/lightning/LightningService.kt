@@ -42,8 +42,10 @@ class LightningService(
 
     private suspend fun sendLightningObservationsToUser(observations: List<UalfData>) {
         if (observations.isNotEmpty()) {
-            val smsContent = messageContentService.getMessageContentForLightningObservations(observations)
-            awsSnsService.pubTextSMSToUser(smsContent)
+            observations.chunked(2).forEach {
+                val smsContent = messageContentService.getMessageContentForLightningObservations(it)
+                awsSnsService.pubTextSMSToUser(smsContent)
+            }
         }
     }
 }
