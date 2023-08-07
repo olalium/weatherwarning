@@ -1,5 +1,5 @@
 # weatherwarning (Lightning ⚡⚡⚡)
-App to get information about lightning using the frost met api and Amazon SNS. Only works in areas FrostAPI has coverage, basically Scandinavia.
+App to get information about lightning using data from MET Norway (Frost API) and Amazon SNS. Only works in areas Frost API has coverage, basically Scandinavia.
 When properly configured the app will send SMS messages with information about lightning near your location.
 ## Example SMS message
 ```
@@ -10,7 +10,6 @@ type: air to ground
 gmaps: https://www.google.com/maps/search/?api=1&query=67.8017,24.5751
 ```
 
-# Setup
 ## Prerequisites
 Java 17
 
@@ -19,7 +18,8 @@ Java 17
 2. then run the outputted jar with ```java -jar ```
 
 ## Environmental variables
-You need to pass the following environmental variables. 
+You need to pass the following environmental variables.
+
 | Environmental variable | description                                                              |
 |------------------------|--------------------------------------------------------------------------|
 | met-client-id          | client id for the frost.met.no api https://frost.met.no/howto.html       |
