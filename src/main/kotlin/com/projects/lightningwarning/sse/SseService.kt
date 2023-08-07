@@ -1,14 +1,12 @@
 package com.projects.lightningwarning.sse
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.google.gson.Gson
 import com.projects.lightningwarning.polling.lightningqueue.LightningQueue
 import org.slf4j.LoggerFactory
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.codec.ServerSentEvent
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
 @JsonIgnoreProperties
@@ -22,7 +20,6 @@ data class SSELightningObservation (
 class SseService(
     private val lightningQueue: LightningQueue
 ) {
-    private val mapper = Gson()
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
     @PostConstruct

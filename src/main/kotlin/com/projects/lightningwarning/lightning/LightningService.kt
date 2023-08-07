@@ -5,6 +5,7 @@ import com.projects.lightningwarning.lightning.frostapi.FrostApiService
 import com.projects.lightningwarning.lightning.location.LocationService
 import com.projects.lightningwarning.lightning.ualf.UalfData
 import com.projects.lightningwarning.messagecontent.MessageContentService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,12 +15,14 @@ class LightningService(
     private val locationService: LocationService,
     private val messageContentService: MessageContentService
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     private val registeredLightnings: MutableList<String> = mutableListOf()
 
     suspend fun getFilteredLightningObservationsAndSendToUser(referenceTime: String = "latest", maxAge: String = "PT5M") {
         val lightningObservations = frostApiService.getUalfLightningData(referenceTime, maxAge)
         val filteredObservations = filterLightningObservations(lightningObservations)
         sendLightningObservationsToUser(filteredObservations)
+        logger.info("${registeredLightnings.size} lightning observations processed since startup")
     }
 
     private fun filterLightningObservations (observations: List<UalfData>): List<UalfData> {
